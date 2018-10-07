@@ -136,6 +136,7 @@ File FileHelper::getArenaCompFileByVersion( int version )
 		break;
 		
 	}
+	return File();
 }
 
 File FileHelper::getVersionSpecificAssFile( File advancedFile, int version, bool showDialog )
