@@ -270,6 +270,7 @@ Array< hybrid::NamedUniqueId > ResXmlParser::getScreenNames(File assFile)
 
 bool ResXmlParser::parseRes5Xml(juce::XmlElement& screenSetup, OwnedArray<hybrid::Slice>& slices, Array<hybrid::Screen>& screens, Point<int>& resolution)
 {
+
 	//get the resolution from the "sizing" element
 	//we later need the resolution to store the slices in the 0...1 range
 	//res 5 still writes the sizing element, so we leave this in
@@ -291,6 +292,9 @@ bool ResXmlParser::parseRes5Xml(juce::XmlElement& screenSetup, OwnedArray<hybrid
 			}
 		}
 	}
+	else if ( XmlElement* curCompTexSize = screenSetup.getChildByName( "CurrentCompositionTextureSize" ) ) // method for > 6.1.2
+		resolution = Point<int>( curCompTexSize->getIntAttribute( "width", 1920 ), curCompTexSize->getIntAttribute( "height", 1080 ) );
+	
 	else //Menno removed the sizing element from the ass file, so I need to get it from somewhere else
 	{
 		//the comp size is not in the ass file (why would it be), so I'll check the config.xml for the current comp
